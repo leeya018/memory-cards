@@ -3,6 +3,10 @@ import "./App.css"
 import { v4 as uuidv4 } from "uuid"
 import Card from "./Card"
 import Timer from "./Timer"
+import LevelForm from "./LevelForm"
+
+
+import { dataCards } from "./data"
 
 let BEST_SCORE = 'highest-score'
 const DELAY_TIME = 400
@@ -10,7 +14,8 @@ export const COLORS = { BLACK: "black" }
 export const ACTIONS = {
 
     OPEN_CARD: "open-card",
-    UPDATE_GAME: "update-game"
+    UPDATE_GAME: "update-game",
+    UPDATE_LEVEL: "update-level"
 }
 // check a match between 2 cards
 function isMatch(arr) {
@@ -38,6 +43,9 @@ function reducer(game, action) {
             return { ...game, cards: newCards, opens: newOpens }
         case ACTIONS.UPDATE_GAME:
             return action.payload.game
+        case ACTIONS.UPDATE_LEVEL:
+            let shuffledCards = dataCards.slice(0, action.payload.level * 2).sort(() => Math.random() - 0.5)
+            return { ...game, level: action.payload.level, cards: shuffledCards, opens: [] }
         default:
             return game
     }
@@ -46,20 +54,9 @@ function reducer(game, action) {
 export default function App() {
     const [timer, setTimer] = useState(0)
     const [game, dispatch] = useReducer(reducer, {
-        cards: [
-            { id: uuidv4(), open: false, color: "red", lock: false, tempLock: false },
-            { id: uuidv4(), open: false, color: "red", lock: false, tempLock: false },
-            { id: uuidv4(), open: false, color: "blue", lock: false, tempLock: false },
-            { id: uuidv4(), open: false, color: "blue", lock: false, tempLock: false },
-            { id: uuidv4(), open: false, color: "green", lock: false, tempLock: false },
-            { id: uuidv4(), open: false, color: "green", lock: false, tempLock: false },
-            { id: uuidv4(), open: false, color: "yellow", lock: false, tempLock: false },
-            { id: uuidv4(), open: false, color: "yellow", lock: false, tempLock: false },
-            // { id: uuidv4(), open: false, color: "purple", lock: false , tempLock:false},
-            // { id: uuidv4(), open: false, color: "purple", lock: false ,tempLock:false}
-
-        ],
-        opens: []
+        cards: dataCards.slice(0, 2),
+        opens: [],
+        level: 1
 
     })
     useEffect(() => {
@@ -108,7 +105,9 @@ export default function App() {
                     } else {
                         alert("FINISH")
                     }
-                    resetGame()
+                    setTimer(0)
+                    let shuffledCards = dataCards.slice(0, game.level * 2).sort(() => Math.random() - 0.5)
+                    dispatch({ type: ACTIONS.UPDATE_GAME, payload: { game: { ...game, opens: [], cards: shuffledCards } } })
 
                 } else {
                     newCards = game.cards.map(card => { return { ...card, tempLock: false } })
@@ -121,18 +120,13 @@ export default function App() {
         }
     }, [game.opens])
 
-
-    function resetGame() {
-        setTimer(0)
-        let newCards = game.cards.map(card => { return { ...card, open: false, lock: false, tempLock: false } })
-        dispatch({ type: ACTIONS.UPDATE_GAME, payload: { game: { ...game, opens: [], cards: newCards } } })
-    }
     console.log(game)
 
     return (
         <div>
             <h1>best Memory game ever</h1>
-            <Timer timer={timer} />
+            <Timer timer={timer}  />
+            <LevelForm dispatch={dispatch} onHandleTimer={setTimer} />
             <div className="container">
                 <div className="cards">
 

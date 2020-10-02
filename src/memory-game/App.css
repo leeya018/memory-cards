@@ -86,3 +86,9 @@ h1 {
     padding: 1em;
     font-size: 2em;
 }
+
+.level-form {
+    position: absolute;
+    top:0;
+    right: 0;
+}
