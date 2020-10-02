@@ -4,7 +4,12 @@ import { v4 as uuidv4 } from "uuid"
 import Card from "./Card"
 import Timer from "./Timer"
 import LevelForm from "./LevelForm"
-import { dataCards, storeScore } from "./data"
+import { dataCards, storeScore, getGrid } from "./data"
+let classNames = require('classnames');
+
+
+
+
 
 let BEST_SCORE = 'highest-score'
 const DELAY_TIME = 400
@@ -124,17 +129,23 @@ export default function App() {
 
     console.log(game)
 
+
+
+
     return (
         <div>
             <h1>best Memory game ever</h1>
             <Timer timer={timer} />
             <LevelForm dispatch={dispatch} onHandleTimer={setTimer} />
             <div className="container">
-                <div className="cards">
+                <div className="cards" style={{
+                    gridTemplateColumns: getGrid(game).cols,
+                    gridTemplateRows: getGrid(game).rows
+                }}>
 
                     {game.cards.map(card => <Card key={card.id} card={card} dispatch={dispatch} />)}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

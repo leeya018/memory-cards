@@ -6,7 +6,7 @@ export default function LevelForm({ dispatch, onHandleTimer }) {
 
     function handleTimer(e) {
         onHandleTimer(0)
-        dispatch({ type: ACTIONS.UPDATE_LEVEL, payload: { level: e.target.value } })
+        dispatch({ type: ACTIONS.UPDATE_LEVEL, payload: { level: parseInt(e.target.value) } })
     }
 
     function createOptions() {
@@ -18,6 +18,7 @@ export default function LevelForm({ dispatch, onHandleTimer }) {
     }
     return (
         <div className="level-form">
+            <h4>choose your level:</h4>
             <select onChange={handleTimer} >
                 {
                     createOptions()

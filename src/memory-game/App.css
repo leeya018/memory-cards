@@ -12,66 +12,11 @@ h1 {
     justify-content: center;
 }
 
-/* case of  4 cards */
-/*
-.cards {
-    width: 50vw;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-}
-.card {
-    width: 44%;
-    height: 30vh;
-    margin: 1em;
-} */
-
-/* case of 6 */
-
-
-/* .cards {
-    width: 60vw;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-}
-.card {
-    width: 25%;
-    height: 30vh;
-    margin: 1em;
-} */
-
-/* 8 cards */
-/* 
-.cards {
-    width: 70vw;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-}
-.card {
-    width: 25%;
-    height: 24vh;
-    margin: 1em;
-} */
 
 .cards {
     width: 70vw;
     display: grid;
     justify-content: space-around;
-    grid-template-columns: 30% 30% 30%;
-    grid-template-rows: 30% 30% 30%;
-
-
 }
 .card {
     width: 95%;
@@ -91,4 +36,9 @@ h1 {
     position: absolute;
     top:0;
     right: 0;
+}
+
+select{
+    font-size: 3em;
+    width: 2em;
 }
