@@ -2,21 +2,21 @@ import React, { useEffect, useReducer } from 'react'
 import "./App.css"
 import { v4 as uuidv4 } from "uuid"
 import Card from "./Card"
+import Timer from "./Timer"
 
-const TIMER = 400
+
+const DELAY_TIME = 400
 export const COLORS = { BLACK: "black" }
 export const ACTIONS = {
 
     OPEN_CARD: "open-card",
     UPDATE_GAME: "update-game"
 }
-
+// check a match between 2 cards
 function isMatch(arr) {
     let [c1, c2] = arr
     return c1.color === c2.color
 }
-
-
 
 function reducer(game, action) {
     switch (action.type) {
@@ -35,7 +35,7 @@ function reducer(game, action) {
                 }
                 return c
             })
-            return { cards: newCards, opens: newOpens }
+            return {...game, cards: newCards, opens: newOpens }
         case ACTIONS.UPDATE_GAME:
             return action.payload.game
         default:
@@ -84,21 +84,18 @@ export default function App() {
                     }
                     return { ...card, tempLock: false }
                 })
-                newGame.cards = newCards
-                newGame.opens = []
-
+                newGame = { ...game, cards: newCards, opens: [] }
                 setTimeout(() => {
                     dispatch({ type: ACTIONS.UPDATE_GAME, payload: { game: newGame } })
 
-                }, TIMER)
+                }, DELAY_TIME)
 
             } else {
                 if (finishGame()) {
                     alert("FINISH")
                 }
                 newCards = game.cards.map(card => { return { ...card, tempLock: false } })
-                newGame.cards = newCards
-                newGame.opens = []
+                newGame = { ...game, cards: newCards, opens: [] }
                 dispatch({ type: ACTIONS.UPDATE_GAME, payload: { game: newGame } })
 
             }
@@ -111,6 +108,7 @@ export default function App() {
     return (
         <div>
             <h1>best Memory game ever</h1>
+            <Timer  />
             <div className="container">
                 <div className="cards">
 
