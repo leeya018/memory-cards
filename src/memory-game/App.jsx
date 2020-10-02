@@ -4,9 +4,7 @@ import { v4 as uuidv4 } from "uuid"
 import Card from "./Card"
 import Timer from "./Timer"
 import LevelForm from "./LevelForm"
-
-
-import { dataCards } from "./data"
+import { dataCards, storeScore } from "./data"
 
 let BEST_SCORE = 'highest-score'
 const DELAY_TIME = 400
@@ -71,8 +69,10 @@ export default function App() {
     }
 
     useEffect(() => {
-        delete localStorage.getItem(BEST_SCORE)
-        localStorage.setItem(BEST_SCORE, 100000)
+        if (localStorage.getItem(BEST_SCORE) == null) {
+            localStorage.setItem(BEST_SCORE, JSON.stringify(storeScore))
+        }
+
         let shuffledCards = game.cards.sort(() => Math.random() - 0.5)
         dispatch({ type: ACTIONS.UPDATE_GAME, payload: { game: { ...game, cards: shuffledCards } } })
     }, [])
@@ -93,14 +93,16 @@ export default function App() {
                 newGame = { ...game, cards: newCards, opens: [] }
                 setTimeout(() => {
                     dispatch({ type: ACTIONS.UPDATE_GAME, payload: { game: newGame } })
-
                 }, DELAY_TIME)
 
             } else {
                 if (finishGame()) {
+                    let storedTimeObj = JSON.parse(localStorage.getItem(BEST_SCORE))
 
-                    if (parseInt(localStorage.getItem(BEST_SCORE)) > timer) {
-                        localStorage.setItem(BEST_SCORE, timer)
+                    let storedTimer = storedTimeObj[game.level]
+                    if (storedTimer > timer) {
+                        storedTimeObj[game.level] = timer
+                        localStorage.setItem(BEST_SCORE, JSON.stringify(storedTimeObj))
                         alert("A NEW RECORD TIMER")
                     } else {
                         alert("FINISH")
@@ -125,7 +127,7 @@ export default function App() {
     return (
         <div>
             <h1>best Memory game ever</h1>
-            <Timer timer={timer}  />
+            <Timer timer={timer} />
             <LevelForm dispatch={dispatch} onHandleTimer={setTimer} />
             <div className="container">
                 <div className="cards">
