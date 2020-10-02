@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./App.css"
 
-export default function Timer() {
+export default function Timer({timer}) {
 
     function getTime() {
         let min = Math.floor(timer / 60)
@@ -10,13 +10,7 @@ export default function Timer() {
         sec = sec < 10 ? '0' + sec : sec
         return `${min}:${sec}`
     }
-    const [timer, setTimer] = useState(5)
-    useEffect(() => {
-        let inter = setInterval(() => {
-            setTimer(timer + 1)
-        }, 1000)
-        return () => clearInterval(inter)
-    }, [timer])
+  
     return (
         <div className="timer">
             {`timer: ${getTime()}`}
