@@ -3,6 +3,7 @@ import "./App.css"
 import { v4 as uuidv4 } from "uuid"
 import Card from "./Card"
 
+const TIMER = 400
 export const COLORS = { BLACK: "black" }
 export const ACTIONS = {
 
@@ -66,6 +67,11 @@ export default function App() {
     }
 
     useEffect(() => {
+        let shuffledCards = game.cards.sort(() => Math.random() - 0.5)
+        dispatch({ type: ACTIONS.UPDATE_GAME, payload: { game: { ...game, cards: shuffledCards } } })
+    }, [])
+
+    useEffect(() => {
         let newCards
         let tempOpens = game.opens
         let newGame = {}
@@ -84,7 +90,7 @@ export default function App() {
                 setTimeout(() => {
                     dispatch({ type: ACTIONS.UPDATE_GAME, payload: { game: newGame } })
 
-                }, 1000)
+                }, TIMER)
 
             } else {
                 if (finishGame()) {
