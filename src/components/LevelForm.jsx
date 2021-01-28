@@ -1,12 +1,12 @@
 import React from 'react'
-import { ACTIONS } from './App';
-import { dataCards } from './data';
+import { UPDATE_LEVEL } from '../actions';
+import { dataCards } from '../util';
 
 export default function LevelForm({ dispatch, onHandleTimer }) {
 
     function handleTimer(e) {
         onHandleTimer(0)
-        dispatch({ type: ACTIONS.UPDATE_LEVEL, payload: { level: parseInt(e.target.value) } })
+        dispatch({ type: UPDATE_LEVEL, payload: { level: parseInt(e.target.value) } })
     }
 
     function createOptions() {
