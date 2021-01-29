@@ -23,7 +23,6 @@ let halfDataCards = ALL_COLORS.map((color, key) => ({
 export const dataCards = [...halfDataCards, halfDataCards];
 
 export function getGrid(game) {
-  console.log("game.level", game.level);
   if (game.level === 1 || game.level === 2) {
     return { cols: "40% 40%", rows: "30% 30% 30%" };
   } else if (game.level === 3 || game.level === 4) {

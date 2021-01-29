@@ -4,10 +4,10 @@ import Card from "./Card";
 import Timer from "./Timer";
 import LevelForm from "./LevelForm";
 import { dataCards, storeScore, getGrid } from "../util";
-import {UPDATE_GAME,BEST_SCORE,DELAY_TIME } from "../actions"
-import reducer from "../reducers"
-import {isMatch } from "../util"
-
+import { UPDATE_GAME, BEST_SCORE, DELAY_TIME } from "../actions";
+import reducer from "../reducers";
+import CategoryChoose from "./CategoryChoose"
+import { isMatch } from "../util";
 
 export default function App() {
   const [timer, setTimer] = useState(0);
@@ -22,8 +22,6 @@ export default function App() {
     }, 1000);
     return () => clearInterval(inter);
   }, [timer]);
-
-
 
   useEffect(() => {
     if (localStorage.getItem(BEST_SCORE) == null) {
@@ -85,15 +83,14 @@ export default function App() {
     }
   }, [game.opens]);
 
-
   function finishGame() {
     return game.cards.filter((card) => card.open == false).length === 0;
   }
-  console.log(game);
 
   return (
     <div>
       <h1>best Memory game ever</h1>
+      <CategoryChoose />
       <Timer timer={timer} />
       <LevelForm dispatch={dispatch} onHandleTimer={setTimer} />
       <div className="container">
