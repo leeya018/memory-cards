@@ -23,7 +23,7 @@ export default function CategoryChoose() {
     setSelectedOption( selectedOption);
     console.log(`Option selected:`, selectedOption);
     unsplash.search.getPhotos({
-        query: 'cat',
+        query: selectedOption.value,
         page: 1,
         perPage: 10,
         color: 'green',
