@@ -12,15 +12,17 @@ const ALL_COLORS = [
   "skyblue",
 ];
 
-export const createCards = (num) =>{
-  const arr =  [...ALL_COLORS.slice(0,num),...ALL_COLORS.slice(0,num)].map((color, key) => ({
+export const BLACK_IMAGE = "https://coolbackgrounds.io/images/backgrounds/black/pure-black-background-f82588d3.jpg"
+
+export const createCards = (num,arr=ALL_COLORS) =>{
+  return  [...arr.slice(0,num),...arr.slice(0,num)].map((color, key) => ({
     id: uuidv4(),
     open: false,
     color,
     lock: false,
     tempLock: false,
   }));
-  return arr
+
 }
 
 export const shuffleCards = (cards)=>{

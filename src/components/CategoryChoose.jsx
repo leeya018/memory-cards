@@ -1,6 +1,10 @@
-import React , {useState } from "react";
+import React , {useState,useContext } from "react";
 import Select from "react-select";
 import { createApi } from 'unsplash-js';
+import {UPDATE_MODE, PHOTO_MODE } from "../actions";
+
+import  {GameContext} from "../context/GameProvider"
+import { createCards, shuffleCards } from "../util";
 
 // on your node server
 const unsplash = createApi({
@@ -19,6 +23,7 @@ const options = [
 
 ];
 export default function CategoryChoose() {
+  const {game,dispatch} = useContext(GameContext)
   const [selectedOption, setSelectedOption] = useState(null);
   
   const handleChange = (selectedOption) => {
@@ -28,8 +33,6 @@ export default function CategoryChoose() {
         query: selectedOption.value,
         page: 1,
         perPage: 10,
-        color: 'green',
-        orientation: 'portrait',
       }).then(result => {
         if (result.errors) {
           // handle error here
@@ -41,8 +44,18 @@ export default function CategoryChoose() {
 
             })
             console.log(urls)
+            if(urls.length < game.level){
+              alert("There are not enought photos for the stage , please choose level : " + urls.length)
+            }
+            let cards = createCards(game.level,urls)
+            let shuffledCards = shuffleCards(cards)
+            dispatch({type:UPDATE_MODE,mode:PHOTO_MODE,cards:shuffledCards})
         }
       });
+
+
+
+
   };
   
   return (

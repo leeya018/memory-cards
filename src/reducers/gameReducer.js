@@ -1,5 +1,5 @@
-import { OPEN_CARD, UPDATE_GAME, UPDATE_LEVEL,UPDATE_TIMER } from "../actions";
-import {shuffleCards, createCards } from "../util";
+import { OPEN_CARD, UPDATE_GAME, UPDATE_LEVEL, UPDATE_TIMER,UPDATE_MODE } from "../actions";
+import { shuffleCards, createCards } from "../util";
 
 function gameReducer(state, action) {
   switch (action.type) {
@@ -23,19 +23,25 @@ function gameReducer(state, action) {
       return { ...state, cards: action.cards, opens: [] };
     case UPDATE_LEVEL:
       let cards = createCards(action.level);
-      let shuffledCards =shuffleCards(cards)
+      let shuffledCards = shuffleCards(cards);
       return {
         ...state,
         level: action.level,
         cards: shuffledCards,
         opens: [],
-        timer:0
+        timer: 0,
       };
-      case UPDATE_TIMER:
-        return {
-          ...state,
-          timer:action.timer
-        }
+    case UPDATE_TIMER:
+      return {
+        ...state,
+        timer: action.timer,
+      };
+    case UPDATE_MODE:
+      return {
+        ...state,
+        mode: action.mode,
+        cards:action.cards
+      };
     default:
       return state;
   }

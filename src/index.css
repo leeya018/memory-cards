@@ -28,9 +28,9 @@ h1 {
   height: 95%;
   margin: 1em;
 }
-.card:hover{
+/* .card:hover{
   transform: translate(5px, -5px);
-}
+} */
 
 .timer {
   position: absolute;
