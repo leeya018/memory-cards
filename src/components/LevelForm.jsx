@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useContext } from 'react'
 import { UPDATE_LEVEL } from '../actions';
+import {GameContext} from "../context/GameProvider"
 
-export default function LevelForm({ dispatch, onHandleTimer }) {
+export default function LevelForm() {
+    const {dispatch } = useContext(GameContext)
 
     function handleOption(e) {
-        onHandleTimer(0)
         dispatch({ type: UPDATE_LEVEL, level: parseInt(e.target.value) })
     }
 
