@@ -28,14 +28,14 @@ export const shuffleCards = (cards)=>{
 }
 
 
-export function getGrid(game) {
-  if (game.level === 1 || game.level === 2) {
+export function getGrid(level) {
+  if (level === 1 || level === 2) {
     return { cols: "40% 40%", rows: "30% 30% 30%" };
-  } else if (game.level === 3 || game.level === 4) {
+  } else if (level === 3 || level === 4) {
     return { cols: "30% 30% 30%", rows: "30% 30% 30%" };
-  } else if (game.level === 5 || game.level === 6) {
+  } else if (level === 5 || level === 6) {
     return { cols: "22% 22% 22% 22%", rows: "30% 30% 30%" };
-  } else if (game.level === 7 || game.level === 8) {
+  } else if (level === 7 || level === 8) {
     return { cols: "22% 22% 22% 22%", rows: "22% 22% 22% 22%" };
   } else {
     return { cols: "15% 15% 15% 15% 15%", rows: "22% 22% 22% 22%" };

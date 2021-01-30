@@ -18,9 +18,8 @@ export default function Card({ card, dispatch }) {
   }
 
   return (
-    <div
+    <div className="card"
       onClick={handleOnClick}
-      className="card"
       style={{ backgroundColor: getColor() }}
     ></div>
   );

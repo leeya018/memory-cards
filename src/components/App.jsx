@@ -102,8 +102,8 @@ export default function App() {
         <div
           className="cards"
           style={{
-            gridTemplateColumns: getGrid(game).cols,
-            gridTemplateRows: getGrid(game).rows,
+            gridTemplateColumns: getGrid(game.level).cols,
+            gridTemplateRows: getGrid(game.level).rows,
           }}
         >
           {game.cards.map((card) => (
