@@ -12,7 +12,8 @@ export const GameProvider = (props) => {
         opens: [],
         level: 1,
         timer:0,
-        mode:COLOR_MODE
+        mode:COLOR_MODE,
+        category:null
       });
     return ( 
         <GameContext.Provider value={{game,dispatch}}>

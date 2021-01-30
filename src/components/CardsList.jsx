@@ -1,8 +1,14 @@
 import React, { useContext, useEffect } from "react";
-import { getGrid } from "../util";
+import { getGrid, getPhotos } from "../util";
 import Card from "./Card";
 import { createCards, storeScore } from "../util";
-import { UPDATE_GAME, BEST_SCORE, DELAY_TIME, UPDATE_TIMER } from "../actions";
+import {
+  UPDATE_GAME,
+  BEST_SCORE,
+  DELAY_TIME,
+  UPDATE_TIMER,
+  PHOTO_MODE,
+} from "../actions";
 import { isMatch, shuffleCards } from "../util";
 import { GameContext } from "../context/GameProvider";
 
@@ -27,7 +33,7 @@ const CardsList = () => {
     });
   }, []);
 
-  useEffect(() => {
+  useEffect( () => {
     let newCards;
     let tempOpens = game.opens;
     if (tempOpens.length === 2) {
@@ -41,14 +47,21 @@ const CardsList = () => {
           updateTimeInLocalStorage();
 
           dispatch({ type: UPDATE_TIMER, timer: 0 });
-          let cards = createCards(game.level);
+          let cards;
+        //   if (game.mode === PHOTO_MODE) {
+        //     const getPhotosHandler = async ()=>{
+        //         return await getPhotos(game.category);
+        //     }
+        //     const urls = getPhotosHandler()
+        //     cards = createCards(game.level, urls);
+        //   } else {
+            cards = createCards(game.level);
+        //   }
           const shuffledCards = shuffleCards(cards);
-          //   setInterval(() => {
           dispatch({
             type: UPDATE_GAME,
             cards: shuffledCards,
           });
-          //   }, 1000);
         } else {
           newCards = game.cards.map((card) => {
             return { ...card, tempLock: false };

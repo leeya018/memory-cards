@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { createApi } from "unsplash-js";
 
 const ALL_COLORS = [
   "red",
@@ -12,23 +13,22 @@ const ALL_COLORS = [
   "skyblue",
 ];
 
-export const BLACK_IMAGE = "https://coolbackgrounds.io/images/backgrounds/black/pure-black-background-f82588d3.jpg"
+export const BLACK_IMAGE =
+  "https://coolbackgrounds.io/images/backgrounds/black/pure-black-background-f82588d3.jpg";
 
-export const createCards = (num,arr=ALL_COLORS) =>{
-  return  [...arr.slice(0,num),...arr.slice(0,num)].map((color, key) => ({
+export const createCards = (num, arr = ALL_COLORS) => {
+  return [...arr.slice(0, num), ...arr.slice(0, num)].map((color, key) => ({
     id: uuidv4(),
     open: false,
     color,
     lock: false,
     tempLock: false,
   }));
+};
 
-}
-
-export const shuffleCards = (cards)=>{
-  return  cards.sort(() => Math.random() - 0.5);
-}
-
+export const shuffleCards = (cards) => {
+  return cards.sort(() => Math.random() - 0.5);
+};
 
 export function getGrid(level) {
   if (level === 1 || level === 2) {
@@ -44,7 +44,46 @@ export function getGrid(level) {
   }
 }
 
-const biggestScore = 1000000
+export async function getPhotos(category) {
+  const unsplash = createApi({
+    accessKey: "yFMiYz6izPXCe1s5IxszZEpTJnyG5ARndivYAaRQAHE",
+    //...other fetch options
+  });
+  let result;
+  try {
+    result = await unsplash.search.getPhotos({
+      query: category,
+      page: 1,
+      perPage: 10,
+    });
+    let urls = result.response.results.map((photo, index) => {
+      return photo.urls.regular;
+    });
+    return urls
+  } catch (e) {
+    alert(e.message);
+  }
+  // .then(result => {
+  //   if (result.errors) {
+  //     // handle error here
+  //     console.log('error occurred: ', result.errors[0]);
+  //   } else {
+  //       // console.log(result)
+  //       let urls = result.response.results.map((photo,index)=>{
+  //           return photo.urls.regular
+
+  //       })
+  //       console.log(urls)
+  //       if(urls.length < game.level){
+  //         alert("There are not enought photos for the stage , please choose level : " + urls.length)
+  //       }
+  //       let cards = createCards(game.level,urls)
+  //       let shuffledCards = shuffleCards(cards)
+  //       dispatch({type:UPDATE_MODE,mode:PHOTO_MODE,cards:shuffledCards})
+  //   }
+  // });
+}
+const biggestScore = 1000000;
 
 export const storeScore = {
   1: biggestScore,
@@ -59,9 +98,8 @@ export const storeScore = {
   10: biggestScore,
 };
 
-
 // check a match between 2 cards
 export function isMatch(arr) {
-    let [c1, c2] = arr;
-    return c1.color === c2.color;
-  }
+  let [c1, c2] = arr;
+  return c1.color === c2.color;
+}

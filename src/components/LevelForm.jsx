@@ -1,29 +1,39 @@
-import React, {useContext } from 'react'
-import { UPDATE_LEVEL } from '../actions';
-import {GameContext} from "../context/GameProvider"
+import React, { useContext } from "react";
+import { PHOTO_MODE, UPDATE_LEVEL } from "../actions";
+import { GameContext } from "../context/GameProvider";
+import { createCards, getPhotos, shuffleCards } from "../util";
 
 export default function LevelForm() {
-    const {dispatch } = useContext(GameContext)
+  const { game, dispatch } = useContext(GameContext);
 
-    function handleOption(e) {
-        dispatch({ type: UPDATE_LEVEL, level: parseInt(e.target.value) })
+  async function handleOption(e) {
+    let level = parseInt(e.target.value);
+    let cards;
+    if (game.mode === PHOTO_MODE) {
+      let urls = await getPhotos(game.category);
+      cards = createCards(level, urls);
+    } else {
+        cards = createCards(level);
     }
+    let shuffledCards = shuffleCards(cards);
+    dispatch({ type: UPDATE_LEVEL, level, cards: shuffledCards });
+  }
 
-    function createOptions() {
-        let arr = []
-        for (let i = 1; i < 10; i++) {
-            arr.push(<option key={i} value={i }>{i }</option>)
-        }
-        return arr
+  function createOptions() {
+    let arr = [];
+    for (let i = 1; i < 10; i++) {
+      arr.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
     }
-    return (
-        <div className="level-form">
-            <h4>choose your level:</h4>
-            <select onChange={handleOption} >
-                {
-                    createOptions()
-                }
-            </select>
-        </div>
-    )
+    return arr;
+  }
+  return (
+    <div className="level-form">
+      <h4>choose your level:</h4>
+      <select onChange={handleOption}>{createOptions()}</select>
+    </div>
+  );
 }

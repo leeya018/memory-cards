@@ -22,12 +22,12 @@ function gameReducer(state, action) {
     case UPDATE_GAME:
       return { ...state, cards: action.cards, opens: [] };
     case UPDATE_LEVEL:
-      let cards = createCards(action.level);
-      let shuffledCards = shuffleCards(cards);
+      // let cards = createCards(action.level);
+      // let shuffledCards = shuffleCards(cards);
       return {
         ...state,
         level: action.level,
-        cards: shuffledCards,
+        cards: action.cards,
         opens: [],
         timer: 0,
       };
@@ -40,7 +40,8 @@ function gameReducer(state, action) {
       return {
         ...state,
         mode: action.mode,
-        cards:action.cards
+        cards:action.cards,
+        category:action.category
       };
     default:
       return state;
