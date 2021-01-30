@@ -15,6 +15,8 @@ const options = [
   { value: "chocolate", label: "Chocolate" },
   { value: "strawberry", label: "Strawberry" },
   { value: "vanilla", label: "Vanilla" },
+  { value: "famous", label: "famous" },
+
 ];
 export default function CategoryChoose() {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -44,7 +46,9 @@ export default function CategoryChoose() {
   };
   
   return (
+    <>
     <Select value={selectedOption} onChange={handleChange} options={options} />
+    </>
   );
 }
 // yFMiYz6izPXCe1s5IxszZEpTJnyG5ARndivYAaRQAHE

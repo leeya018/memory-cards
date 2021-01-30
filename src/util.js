@@ -12,15 +12,17 @@ const ALL_COLORS = [
   "skyblue",
 ];
 
-let halfDataCards = ALL_COLORS.map((color, key) => ({
-  id: uuidv4(),
-  open: false,
-  color,
-  lock: false,
-  tempLock: false,
-}));
+export const createCards = (num) =>{
+  const arr =  [...ALL_COLORS.slice(0,num),...ALL_COLORS.slice(0,num)].map((color, key) => ({
+    id: uuidv4(),
+    open: false,
+    color,
+    lock: false,
+    tempLock: false,
+  }));
+  return arr
+}
 
-export const dataCards = [...halfDataCards, halfDataCards];
 
 export function getGrid(game) {
   if (game.level === 1 || game.level === 2) {

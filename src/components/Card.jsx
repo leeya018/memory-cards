@@ -6,7 +6,8 @@ export default function Card({ card, dispatch }) {
     if (!card.lock && !card.tempLock) {
       dispatch({
         type: OPEN_CARD,
-        payload: { id: card.id, lock: true },
+        id: card.id,
+        lock: true,
       });
     }
   }

@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useReducer } from "react";
-import "./App.css";
+import "../index.css";
 import Card from "./Card";
 import Timer from "./Timer";
 import LevelForm from "./LevelForm";
-import { dataCards, storeScore, getGrid } from "../util";
+import { createCards, storeScore, getGrid } from "../util";
 import { UPDATE_GAME, BEST_SCORE, DELAY_TIME } from "../actions";
-import reducer from "../reducers";
-import CategoryChoose from "./CategoryChoose"
+import reducer from "../reducers/gameReducer";
+import CategoryChoose from "./CategoryChoose";
 import { isMatch } from "../util";
 
 export default function App() {
   const [timer, setTimer] = useState(0);
   const [game, dispatch] = useReducer(reducer, {
-    cards: dataCards.slice(0, 2),
+    cards: createCards(1),
     opens: [],
     level: 1,
   });
+  // console.log(game)
   useEffect(() => {
     let inter = setInterval(() => {
       setTimer(timer + 1);
@@ -31,7 +32,7 @@ export default function App() {
     let shuffledCards = game.cards.sort(() => Math.random() - 0.5);
     dispatch({
       type: UPDATE_GAME,
-      payload: { game: { ...game, cards: shuffledCards } },
+      cards: shuffledCards,
     });
   }, []);
 
@@ -48,9 +49,8 @@ export default function App() {
           }
           return { ...card, tempLock: false };
         });
-        newGame = { ...game, cards: newCards, opens: [] };
         setTimeout(() => {
-          dispatch({ type: UPDATE_GAME, payload: { game: newGame } });
+          dispatch({ type: UPDATE_GAME, cards: newCards });
         }, DELAY_TIME);
       } else {
         if (finishGame()) {
@@ -65,19 +65,18 @@ export default function App() {
             alert("FINISH");
           }
           setTimer(0);
-          let shuffledCards = dataCards
-            .slice(0, game.level * 2)
-            .sort(() => Math.random() - 0.5);
+          let shuffledCards = createCards(game.level).sort(
+            () => Math.random() - 0.5
+          );
           dispatch({
             type: UPDATE_GAME,
-            payload: { game: { ...game, opens: [], cards: shuffledCards } },
+            cards: shuffledCards,
           });
         } else {
           newCards = game.cards.map((card) => {
             return { ...card, tempLock: false };
           });
-          newGame = { ...game, cards: newCards, opens: [] };
-          dispatch({ type: UPDATE_GAME, payload: { game: newGame } });
+          dispatch({ type: UPDATE_GAME,cards: newCards });
         }
       }
     }
@@ -92,7 +91,11 @@ export default function App() {
       <h1>best Memory game ever</h1>
       <CategoryChoose />
       <Timer timer={timer} />
-      <LevelForm dispatch={dispatch} onHandleTimer={setTimer} />
+      <LevelForm
+        dispatch={dispatch}
+        onHandleTimer={setTimer}
+        level={game.level}
+      />
       <div className="container">
         <div
           className="cards"
