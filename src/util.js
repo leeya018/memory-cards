@@ -23,6 +23,10 @@ export const createCards = (num) =>{
   return arr
 }
 
+export const shuffleCards = (cards)=>{
+  return  cards.sort(() => Math.random() - 0.5);
+}
+
 
 export function getGrid(game) {
   if (game.level === 1 || game.level === 2) {

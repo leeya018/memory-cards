@@ -1,5 +1,5 @@
 import { OPEN_CARD, UPDATE_GAME, UPDATE_LEVEL } from "../actions";
-import { createCards } from "../util";
+import {shuffleCards, createCards } from "../util";
 
 function gameReducer(state, action) {
   switch (action.type) {
@@ -23,7 +23,7 @@ function gameReducer(state, action) {
       return { ...state, cards: action.cards, opens: [] };
     case UPDATE_LEVEL:
       let cards = createCards(action.level);
-      let shuffledCards = cards.sort(() => Math.random() - 0.5);
+      let shuffledCards =shuffleCards(cards)
       return {
         ...state,
         level: action.level,
