@@ -45,8 +45,9 @@ export function getGrid(level) {
 }
 
 export async function getPhotos(category) {
+  console.log(process.env)
   const unsplash = createApi({
-    accessKey: "yFMiYz6izPXCe1s5IxszZEpTJnyG5ARndivYAaRQAHE",
+    accessKey: process.env.REACT_APP_UNSPLASH_KEY,
     //...other fetch options
   });
   let result;
@@ -63,25 +64,7 @@ export async function getPhotos(category) {
   } catch (e) {
     alert(e.message);
   }
-  // .then(result => {
-  //   if (result.errors) {
-  //     // handle error here
-  //     console.log('error occurred: ', result.errors[0]);
-  //   } else {
-  //       // console.log(result)
-  //       let urls = result.response.results.map((photo,index)=>{
-  //           return photo.urls.regular
 
-  //       })
-  //       console.log(urls)
-  //       if(urls.length < game.level){
-  //         alert("There are not enought photos for the stage , please choose level : " + urls.length)
-  //       }
-  //       let cards = createCards(game.level,urls)
-  //       let shuffledCards = shuffleCards(cards)
-  //       dispatch({type:UPDATE_MODE,mode:PHOTO_MODE,cards:shuffledCards})
-  //   }
-  // });
 }
 const biggestScore = 1000000;
 

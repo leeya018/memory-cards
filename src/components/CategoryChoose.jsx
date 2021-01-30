@@ -6,8 +6,6 @@ import { UPDATE_MODE, PHOTO_MODE } from "../actions";
 import { GameContext } from "../context/GameProvider";
 import { createCards, getPhotos, shuffleCards } from "../util";
 
-//   https://api.unsplash.com/photos/?client_id=yFMiYz6izPXCe1s5IxszZEpTJnyG5ARndivYAaRQAHE/search/photos?page=1&query=office
-// https://api.unsplash.com/search/photos?page=1&query=office
 const options = [
   { value: "chocolate", label: "Chocolate" },
   { value: "strawberry", label: "Strawberry" },
@@ -49,5 +47,4 @@ export default function CategoryChoose() {
     </>
   );
 }
-// yFMiYz6izPXCe1s5IxszZEpTJnyG5ARndivYAaRQAHE
-// d-zsZV29YPpWFcvUpSLdKabzofDmhUAlEjDT4wT-JKU
+
