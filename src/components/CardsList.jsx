@@ -33,7 +33,7 @@ const CardsList = () => {
     });
   }, []);
 
-  useEffect( () => {
+  useEffect(() => {
     let newCards;
     let tempOpens = game.opens;
     if (tempOpens.length === 2) {
@@ -45,23 +45,7 @@ const CardsList = () => {
       } else {
         if (finishGame()) {
           updateTimeInLocalStorage();
-
           dispatch({ type: UPDATE_TIMER, timer: 0 });
-          let cards;
-        //   if (game.mode === PHOTO_MODE) {
-        //     const getPhotosHandler = async ()=>{
-        //         return await getPhotos(game.category);
-        //     }
-        //     const urls = getPhotosHandler()
-        //     cards = createCards(game.level, urls);
-        //   } else {
-            cards = createCards(game.level);
-        //   }
-          const shuffledCards = shuffleCards(cards);
-          dispatch({
-            type: UPDATE_GAME,
-            cards: shuffledCards,
-          });
         } else {
           newCards = game.cards.map((card) => {
             return { ...card, tempLock: false };
