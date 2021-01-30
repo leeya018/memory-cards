@@ -39,13 +39,16 @@ const CardsList = () => {
       } else {
         if (finishGame()) {
           updateTimeInLocalStorage();
+
           dispatch({ type: UPDATE_TIMER, timer: 0 });
           let cards = createCards(game.level);
           const shuffledCards = shuffleCards(cards);
+          //   setInterval(() => {
           dispatch({
             type: UPDATE_GAME,
             cards: shuffledCards,
           });
+          //   }, 1000);
         } else {
           newCards = game.cards.map((card) => {
             return { ...card, tempLock: false };

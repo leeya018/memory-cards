@@ -20,6 +20,8 @@ const options = [
   { value: "strawberry", label: "Strawberry" },
   { value: "vanilla", label: "Vanilla" },
   { value: "famous", label: "famous" },
+  { value: "sex", label: "sex" },
+
 
 ];
 export default function CategoryChoose() {
